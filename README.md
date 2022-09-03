@@ -510,3 +510,119 @@ Now, we're allowed to rewrite the value in the `x` variable safely without being
 ## Considerable trade-offs between immutable and mutable variables
 
 - Using large data structures, mutating an instance in place may be faster than copying and returning newly allocated instances. With smaller data structures, creating new instances and writing in a more functional programming style may be easier to thing through, so lower performance might be a worthwhile penalty for gaining that clarity.
+
+## Differences Between Variables and Constants
+
+- `mut` is not allowed for use with constants. Constants are always immutable.
+- Constants are declared using the `const` keyword as opposed to variables that use the `let` keyword.
+- In constants, the variable type *must* be annotated. 
+- Constants can be declared in any scope, including the global scope. 
+- Constants are only set to a constant expression, not to the result of a function call or values that could be computed an runtime.
+
+Example of a constant declaration where the constant's name is `MAX_POINTS` and its value is set to 100,000. The naming convention for constants is to use all uppercase with underscores between words:
+
+```rust
+const MAX_POINTS: u32 = 100,000;
+```
+
+
+## Data types in Rust
+
+- In cases when may types are possible, such as when we converted a `String` to a numeric type using `parse` in [[Rust Study Notes#^f257ba]]
+
+### Scalar Types
+A *scalar* type represents a single value. Rust has for primary scalar types: 
+- integers, 
+- floating-point numbers, 
+- Booleans and, 
+- characters.
+
+### Integer Types
+An *integer* is a number without a fractional component. The type declaration indicates that the value it's associated with should be an unsigned integer (signed integer types start with `i` instead of `u`) that takes up 32 bits of space.
+
+It can range from `i8/u8` to `i64/u64`.
+
+<table>
+		<th>Length</th>
+		<th>Range of values</th>
+	<tr>
+		<td>8-bit</td>
+		<td>-128 to 127</td>
+	</tr>
+	<tr>
+		<td>16-bit</td>
+		<td>-32,768 ‬to 32,767 ‬</td>
+	</tr>
+		<tr>
+		<td>32-bit</td>
+		<td>-2,147,483,648 ‬to 2,147,483,647</td>
+	</tr>
+</table>
+
+- Unsigned means the number can never have a sign (negative) and will forever be positive, signed means the number can take on the negative sign therefore it can be a negative number.
+- Each signed variant can store value from $-(2^{n-1})$ to $2^{n-1} - 1$, where *n* is the number of bits the variant uses. So an `i8` can store value from $-(2^{7})$ to $2^{7}-1$.  Its unsigned variant can store numbers from $0$ to $2^{7}$. $2^{7}$ equals 128.
+- Integers can be written as *57u8* or *1_000*, using \_(underscore) as a visual separator.
+
+<table>
+		<th>Number Literal</th>
+		<th>Examples</th>
+	<tr>
+		<td>Decimal</td>
+		<td>98_768</td>
+	</tr>
+	<tr>
+		<td>Hex</td>
+		<td>0xff</td>
+	</tr>
+		<tr>
+		<td>Octal</td>
+		<td>0o88</td>
+	</tr>
+		<tr>
+		<td>Binary</td>
+		<td>0b1111_0000</td>
+	</tr>
+	<tr>
+		<td>Byte (u8 only)</td>
+		<td>b'A'</td>
+	</tr>
+</table>
+
+
+If unsure on the integer type to use, Rust defaults to `i32`, this type is generally the fastest, even on 64-bit systems.
+
+### Floating-Point Types
+Rust's floating points types are `f32` and `f64`, which are 32 bits and 64 bits in size respectively. The default type is `f64`, this is considerably as fast as `f32` and has got more precision.
+
+Floating numbers in action:
+```rust
+fn main() {
+    let x = 2.0; // f64 
+
+    let y: f32 = 3.0; // f32
+}
+```
+
+Floating-point numbers are represented according to the [**IEEE-754**](https://wikipedia.org/wiki/IEEE_754) standard. The `f32` type is a single-precision float, and `f64` has double precision.
+
+### Numeric Operations
+Like every other programming language, Rust supports basic mathematics operations for all of the number types: addition, subtraction, multiplication, division and remainder.
+
+```rust
+fn main() {
+    // addition
+    let _sum: u8 = 5 + 10;
+
+    // subtraction
+    let _difference: f32 = 95.5 - 4.3;
+
+    // multiplication
+    let _product: u8 = 4 * 30;
+
+    // division
+    let _quotient: f32 = 56.7 / 32.2;
+
+    // remainder 
+    let _remainder: u8 = 43 % 5;
+}
+```
