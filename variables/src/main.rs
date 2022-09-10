@@ -1,7 +1,14 @@
-fn main() {
-    let mut x = 5;
-    println!("The value of x is: {}", x);
+use std::env;
 
-    x = 6;
-    println!("The value of x is: {}", x);
+fn main() {
+    let key = "PATH";
+
+    match env::var(key) {
+        Ok(val) => {
+            println!("{key}: {val}")
+        }
+        Err(e) => {
+            println!("{key}: {e}")
+        }
+    }
 }
